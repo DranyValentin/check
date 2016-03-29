@@ -1,0 +1,94 @@
+<!doctype>
+<script>
+
+function check (obj, params) {
+	if ( obj !== Object(obj) && params !== Object(params) )
+			throw new TypeError;
+
+	var i = 0, j = 0, key = 0;
+	var arrParams = Object.keys(params);
+	var arrObj = Object.keys(obj);
+
+	while ( i < arrParams.length ) {
+		while ( j < arrObj.length ){
+			if ( arrParams[i] == arrObj[j] ){
+				if ( typeof obj[arrObj[j]] != "number" )
+					throw new TypeError;
+
+				key++;
+				break;
+			}
+
+			j++
+		}
+
+		j = 0;
+		i++;
+	}
+
+	if ( key == arrParams.length)
+		console.log('В объекте obj есть все искомые ключи');
+	else if ( key > 0 )
+		console.log('В объекте obj есть не все искомые ключи');
+	else
+		console.log('В объекте obj нет нужных ключей');	
+
+	//	arr[i] // freq, display
+	//	params[arr[i]] // number, number
+	//	if ( arr[i] in 'frequency' && typeof params[arr[i]] == 'number')
+
+}
+
+
+
+
+
+
+
+		
+function Laptop(year, config) {
+	this.year = +year;
+
+	if ( config !== Object(config) )
+			throw new TypeError;
+
+	if ( !(typeof config.frequency == "number" && typeof config.display_size == "number" ) )
+		throw new TypeError;
+
+	this.config = config;
+
+	check(config,
+	{
+		frequency: 'number',
+		display_size: 'number'
+	})
+
+
+
+}
+
+Laptop.prototype.os = function() {
+	if ( this.year > 2001 && this.year < 2006 )
+		return 'xp';
+	if ( this.year >= 2007 && this.year < 2009 )
+		return 'vista';
+	if ( this.year >= 2009 && this.year < 2012 )
+		return '7';
+	if ( this.year >= 2012 && this.year < 2014 )
+		return '8';
+
+	this
+}
+
+function Macbook(year) {
+	this.year = +year;
+}
+
+Macbook.prototype = new Laptop;
+
+Macbook.prototype.os = function() {
+	return `10.${ this.year - 2004 }`
+
+}
+
+
